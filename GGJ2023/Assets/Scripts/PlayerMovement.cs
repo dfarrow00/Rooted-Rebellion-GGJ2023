@@ -28,8 +28,10 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
-        playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
-        minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (playerWidth / 2);
+        /*playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+        Debug.Log(playerWidth);*/
+
+        minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (1 / 2);
         maxXBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
     }
 
