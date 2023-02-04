@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float movement;
     private bool grounded = false;
+    private bool doubleJumped = false;
     private Rigidbody2D rigidBody;
     // Start is called before the first frame update
     void Start()
@@ -23,9 +24,18 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.velocity = new Vector2(speed * movement, rigidBody.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (Input.GetButtonDown("Jump"))
         {
-            rigidBody.AddForce(new Vector2(0, jumpForce));
+            if (grounded)
+            {
+                rigidBody.AddForce(new Vector2(0, jumpForce));
+                grounded = false;
+            }
+            else if (!grounded && !doubleJumped)
+            {
+                rigidBody.AddForce(new Vector2(0, jumpForce));
+                doubleJumped = true;
+            }
         }
     }
 
@@ -34,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             grounded = true;
+            doubleJumped = false;
         }
     }
 
