@@ -44,7 +44,11 @@ public class RootHandler : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-
+            PlayerHealth playerHealthComp = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealthComp)
+            {
+                playerHealthComp.TakeDamage(10);
+            }
         }
 
         else if (collision.gameObject.tag == "Enemy")

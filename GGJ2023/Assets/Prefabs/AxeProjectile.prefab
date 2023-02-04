@@ -145,3 +145,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  axePickup: {fileID: 170293049575407319, guid: 534c51b8eb6e8f448988654349361780, type: 3}

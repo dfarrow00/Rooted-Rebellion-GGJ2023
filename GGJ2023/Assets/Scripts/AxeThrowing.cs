@@ -8,14 +8,15 @@ public class AxeThrowing : MonoBehaviour
     public Transform axeSpawnTransform;
     public SpriteRenderer axeSpawnPointSprite;
 
-    private bool hasAxe = false;
+    private bool hasAxe;
     private Camera mainCamera;
     private Vector3 mousePos;//Not Vector2 as mousePos is used with 'transorm.position' in Update which is Vector3.
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        axeSpawnPointSprite.enabled = false;
+        hasAxe = true;
+        axeSpawnPointSprite.enabled = true;
     }
 
     // Update is called once per frame
@@ -40,7 +41,6 @@ public class AxeThrowing : MonoBehaviour
 
     public void PickUpAxe()
     {
-        Debug.Log("Called");
         hasAxe = true;
         axeSpawnPointSprite.enabled = true;
     }

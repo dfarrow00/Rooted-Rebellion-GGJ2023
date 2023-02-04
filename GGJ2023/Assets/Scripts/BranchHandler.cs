@@ -36,6 +36,11 @@ public class BranchHandler : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Player")
         {
+            PlayerHealth playerHealthComp = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealthComp)
+            {
+                playerHealthComp.TakeDamage(5);
+            }
             Destroy(gameObject);
         }
 
