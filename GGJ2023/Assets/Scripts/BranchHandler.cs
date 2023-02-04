@@ -6,22 +6,19 @@ public class BranchHandler : MonoBehaviour
 {
     public float speed;
     private Vector2 direction;
-    private bool move;
     private Rigidbody2D rigidBody;
     // Start is called before the first frame update
     void Start()
     {
-        move = true;
-
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         direction = (player.transform.position - transform.position).normalized;
-        
-        Vector3 vectorToTarget = player.transform.position - transform.position;
-        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.AddForce(direction * speed, ForceMode2D.Impulse);
+        //pls work
     }
 
     // Update is called once per frame
