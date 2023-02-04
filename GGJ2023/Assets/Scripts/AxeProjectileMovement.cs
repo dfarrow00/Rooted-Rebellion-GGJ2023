@@ -43,13 +43,17 @@ public class AxeProjectileMovement : MonoBehaviour
             }
             transform.parent = collision.gameObject.transform;
             Destroy(rigidBody);
-            StartCoroutine(SpawnAxePickup());
+            StartCoroutine(SpawnAxePickup(2.0f));
+        }
+        else
+        {
+            StartCoroutine(SpawnAxePickup(1.0f));
         }
     }
 
-    private IEnumerator SpawnAxePickup()
+    private IEnumerator SpawnAxePickup(float delay)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(delay);
         if (axePickup)
         {
             Instantiate(axePickup, transform.position, transform.rotation);

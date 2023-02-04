@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public float dashingDuration;
     public float dashingCooldown;
 
+    private Camera mainCamera;
+    private float minXBounds;
+    private float maxXBounds;
+    private float playerWidth;
     private float movement;
     private bool grounded = false;
     private bool doubleJumped = false;
@@ -22,6 +26,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+        minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (playerWidth / 2);
+        maxXBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
     }
 
     // Update is called once per frame
@@ -52,6 +61,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Dash") && canDash)
         {
             StartCoroutine(Dash());
+        }
+
+        if (gameObject.transform.position.x < minXBounds)
+        {
+            gameObject.transform.position = new Vector2(minXBounds, transform.position.y);
+        }
+        else if (gameObject.transform.position.x > maxXBounds)
+        {
+            gameObject.transform.position = new Vector2(maxXBounds, transform.position.y);
         }
     }
 

@@ -34,7 +34,7 @@ public class BranchHandler : MonoBehaviour
             Destroy(rigidBody);
             StartCoroutine(DeleteBranch());
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Player" && rigidBody != null)
         {
             PlayerHealth playerHealthComp = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealthComp)
@@ -47,7 +47,7 @@ public class BranchHandler : MonoBehaviour
         IEnumerator DeleteBranch()
         {
             yield return new WaitForSecondsRealtime(2);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth;
     public Material hitEffectMaterial;
     public float hitEffectDuration;
+    public Scrollbar healthBar;
 
     private float health;
     private Material originalMaterial;
@@ -29,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.size = health / maxHealth;
         if (health <= 0)
         {
             Debug.Log("Player Died");
