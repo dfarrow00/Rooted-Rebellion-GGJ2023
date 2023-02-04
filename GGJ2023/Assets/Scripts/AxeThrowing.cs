@@ -7,6 +7,7 @@ public class AxeThrowing : MonoBehaviour
     public GameObject axePrefab;
     public Transform axeSpawnTransform;
     public SpriteRenderer axeSpawnPointSprite;
+    public LayerMask layerMask;
 
     private bool hasAxe;
     private Camera mainCamera;
@@ -28,13 +29,35 @@ public class AxeThrowing : MonoBehaviour
         float rotationZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotationZ);
 
-        if (Input.GetMouseButtonDown(0) && hasAxe)
+        if (Input.GetMouseButtonDown(1) && hasAxe)
         {
             if (axePrefab)
             {
                 Instantiate(axePrefab, axeSpawnTransform.position, Quaternion.identity);
                 hasAxe = false;
                 axeSpawnPointSprite.enabled = false;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && hasAxe)
+        {
+            Vector3 parentPosition = transform.parent.position;
+            RaycastHit2D hitResult = Physics2D.Linecast(parentPosition, parentPosition + new Vector3(mousePos.x > transform.parent.position.x ? 1.5f : -1.5f, 0), layerMask);
+            Debug.DrawLine(parentPosition, parentPosition + new Vector3(mousePos.x > transform.parent.position.x ? 1.5f : -1.5f, 0), Color.red, 1f);
+            if (hitResult.collider != null)
+            {
+                if (hitResult.collider.gameObject.tag == "Enemy")
+                {
+                    EnemyHealth enemyHealthComponent = hitResult.collider.gameObject.GetComponent<EnemyHealth>();
+                    if (enemyHealthComponent)
+                    {
+                        enemyHealthComponent.TakeDamage(10);
+                    }
+                    else
+                    {
+                        Debug.LogError("Enemy Health Script not found");
+                    }
+                }
             }
         }
     }
