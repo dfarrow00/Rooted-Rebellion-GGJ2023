@@ -24,22 +24,25 @@ public class BranchHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("hello");
         if (collision.gameObject.tag == "Ground")
         {
             Destroy(rigidBody);
             StartCoroutine(DeleteBranch());
         }
-    }
+        else if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
 
-    IEnumerator DeleteBranch()
-    {
-        yield return new WaitForSeconds(2);
-        gameObject.SetActive(false);
+        IEnumerator DeleteBranch()
+        {
+            yield return new WaitForSecondsRealtime(2);
+            gameObject.SetActive(false);
+        }
     }
 }
