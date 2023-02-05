@@ -7,17 +7,7 @@ public class MenuHandler : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject howToPlay;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject credits;
 
     public void StartGame()
     {
@@ -30,10 +20,17 @@ public class MenuHandler : MonoBehaviour
         mainMenu.SetActive(false);
     }
 
+    public void Credits()
+    {
+        credits.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
     public void Back()
     {
         mainMenu.SetActive(true);
         howToPlay.SetActive(false);
+        credits.SetActive(false);
     }
 
     public void Quit()
