@@ -8,12 +8,18 @@ public class EnemyAI : MonoBehaviour
     public GameObject AOEWarning;
     public GameObject player;
 
+    public float minDelay;
+    public float maxDelay;
+
+    private Animator animator;
+
     private float attackDelay;
     private float randomAttack;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         StartCoroutine(SpawnBranch());
     }
 
@@ -22,7 +28,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSecondsRealtime(2);
         float count = 0;
 
-        attackDelay = Random.Range(0.2f, 2f);
+        attackDelay = Random.Range(minDelay, maxDelay);
         randomAttack = Random.Range(0f, 1f);
 
         while (true)
@@ -33,20 +39,16 @@ public class EnemyAI : MonoBehaviour
                 count = 0;
                 if (randomAttack > 0.8f)
                 {
-                    Vector2 playerPos = player.transform.position;
-                    playerPos.y = -4.63f;
-                    Instantiate(AOEWarning, playerPos, Quaternion.Euler(0, 0, 0));
-                    attackDelay = Random.Range(0f, 2f);
+                    SpawnRoot();
                 }
                 else
                 {
-                    float randomYPosition = Random.Range(-3.15f, 2.94f);
+                    float randomYPosition = Random.Range(-3.3f, 4.2f);
                     Vector2 branchSpawnPos = new Vector2(transform.position.x, randomYPosition);
-                    Instantiate(branch, branchSpawnPos, Quaternion.Euler(0, 0, 0));
-                    attackDelay = Random.Range(0f, 2f);
+                    Instantiate(branch, branchSpawnPos, Quaternion.Euler(0, 0, 90));
                 }
 
-                
+                attackDelay = Random.Range(minDelay, maxDelay);
                 randomAttack = Random.Range(0f, 1f);
             }
             yield return null;
@@ -54,9 +56,16 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SpawnRoot()
     {
+        animator.Play("AOE Charge");
+        Vector2 playerPos = player.transform.position;
+        playerPos.y = -5.2f;
+        Instantiate(AOEWarning, playerPos, Quaternion.Euler(0, 0, 0));
+    }
 
+    public void ChangeMaxDelay(float newDelay)
+    {
+        maxDelay = newDelay;
     }
 }
