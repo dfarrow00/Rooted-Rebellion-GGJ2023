@@ -7,6 +7,7 @@ public class BranchHandler : MonoBehaviour
     public float speed;
     private Vector2 direction;
     private Rigidbody2D rigidBody;
+    private BoxCollider2D boxCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class BranchHandler : MonoBehaviour
 
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.AddForce(direction * speed, ForceMode2D.Impulse);
-        //pls work
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -32,6 +33,7 @@ public class BranchHandler : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             Destroy(rigidBody);
+            Destroy(boxCollider);
             StartCoroutine(DeleteBranch());
         }
         else if (collision.gameObject.tag == "Player" && rigidBody != null)

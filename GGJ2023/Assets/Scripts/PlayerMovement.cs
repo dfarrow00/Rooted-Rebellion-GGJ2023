@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashingForce;
     public float dashingDuration;
     public float dashingCooldown;
+    public GameObject axeBone;
 
     private Camera mainCamera;
     private float minXBounds;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         animator = GetComponent<Animator>();
+        axeBone.transform.localScale = new Vector3(0, 0, 0);
 
         playerWidth = GetComponent<BoxCollider2D>().bounds.size.x;
 
@@ -125,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.velocity = new Vector2((movement < 0 ? -1 : 1) * dashingForce, 0);
         trailRenderer.emitting = true;
+        animator.SetTrigger("dash");
 
         yield return new WaitForSeconds(dashingDuration);
 
