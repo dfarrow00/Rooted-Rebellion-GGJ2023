@@ -39,7 +39,7 @@ public class AxeProjectileMovement : MonoBehaviour
             EnemyHealth enemyHealthComp = collision.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealthComp)
             {
-                enemyHealthComp.TakeDamage(10);
+                enemyHealthComp.TakeDamage(10, 2);
             }
             transform.parent = collision.gameObject.transform;
             Destroy(rigidBody);

@@ -9,9 +9,11 @@ public class PlayerHealth : MonoBehaviour
     public Scrollbar healthBar;
 
     private float health;
+    private GameController gameController;
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         health = maxHealth;
     }
 
@@ -27,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.size = health / maxHealth;
         if (health <= 0)
         {
-            Debug.Log("Player Died");
+            gameController.PlayerLose();
         }
     }
 }

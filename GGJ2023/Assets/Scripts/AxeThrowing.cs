@@ -10,6 +10,7 @@ public class AxeThrowing : MonoBehaviour
     public LayerMask layerMask;
 
     private bool hasAxe;
+    private bool canMelee;
     private Camera mainCamera;
     private Vector3 mousePos;//Not Vector2 as mousePos is used with 'transorm.position' in Update which is Vector3.
     private Animator animator;
@@ -18,6 +19,7 @@ public class AxeThrowing : MonoBehaviour
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         hasAxe = true;
+        canMelee = true;
         heldAxe.SetActive(true);
         animator = GetComponent<Animator>();
     }
@@ -42,8 +44,10 @@ public class AxeThrowing : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && hasAxe)
+        if (Input.GetMouseButtonDown(0) && hasAxe && canMelee)
         {
+            canMelee = false;
+            Invoke(nameof(MeleeDelay), 0.25f);
             animator.SetTrigger("throw");
             RaycastHit2D hitResult = Physics2D.Linecast(transform.position + new Vector3(0, 1), transform.position + new Vector3(mousePos.x > transform.position.x ? 1.5f : -1.5f, 1), layerMask);
             Debug.DrawLine(transform.position + new Vector3(0, 1), transform.position + new Vector3(mousePos.x > transform.position.x ? 1.5f : -1.5f, 1), Color.red, 1f);
@@ -54,7 +58,7 @@ public class AxeThrowing : MonoBehaviour
                     EnemyHealth enemyHealthComponent = hitResult.collider.gameObject.GetComponent<EnemyHealth>();
                     if (enemyHealthComponent)
                     {
-                        enemyHealthComponent.TakeDamage(10);
+                        enemyHealthComponent.TakeDamage(5, 1);
                     }
                     else
                     {
@@ -63,6 +67,11 @@ public class AxeThrowing : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void MeleeDelay()
+    {
+        canMelee = true;
     }
 
     public void PickUpAxe()
