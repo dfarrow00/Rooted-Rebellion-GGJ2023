@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private bool doubleJumped = false;
     private bool canDash = true;
     private bool isDashing;
+    private bool flipped= false;
+    private Animator animator;
     private Rigidbody2D rigidBody;
 
     // Start is called before the first frame update
@@ -27,11 +29,11 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        animator = GetComponent<Animator>();
 
-        /*playerWidth = GetComponent<SpriteRenderer>().bounds.size.x;
-        Debug.Log(playerWidth);*/
+        playerWidth = GetComponent<BoxCollider2D>().bounds.size.x;
 
-        minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (1 / 2);
+        minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (playerWidth / 2);
         maxXBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
     }
 
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         movement = Input.GetAxis("Horizontal");
+        animator.SetFloat("speed", Mathf.Abs(movement));
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -60,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        animator.SetBool("isInAir", !grounded);
+
         if (Input.GetButtonDown("Dash") && canDash)
         {
             StartCoroutine(Dash());
@@ -73,6 +78,16 @@ public class PlayerMovement : MonoBehaviour
         {
             gameObject.transform.position = new Vector2(maxXBounds, transform.position.y);
         }
+
+        if (mainCamera.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x)
+        {
+            flipped = true;
+        }
+        else
+        {
+            flipped = false;
+        }
+        transform.rotation = Quaternion.Euler(0f, flipped ? 180f : 0, 0f);
     }
 
     private void FixedUpdate()
