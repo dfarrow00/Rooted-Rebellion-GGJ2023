@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    private float shakeDuration = 0;
-    private float shakeMagnitude = 0.2f;
-    private float dampingSpeed = 2.0f;
+    private float duration = 0;
+    private float impact = 0.2f;
+    private float fallof = 2.0f;
 
     Vector3 initialPosition;
 
@@ -16,21 +16,21 @@ public class CameraShake : MonoBehaviour
     }
     void Update()
     {
-        if (shakeDuration > 0)
+        if (duration > 0)
         {
-            transform.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
+            transform.localPosition = initialPosition + Random.insideUnitSphere * impact;
 
-            shakeDuration -= Time.deltaTime * dampingSpeed;
+            duration -= Time.deltaTime * fallof;
         }
         else
         {
-            shakeDuration = 0f;
+            duration = 0f;
             transform.localPosition = initialPosition;
         }
     }
 
     public void StartShake()
     {
-        shakeDuration = 0.1f;
+        duration = 0.1f;
     }
 }

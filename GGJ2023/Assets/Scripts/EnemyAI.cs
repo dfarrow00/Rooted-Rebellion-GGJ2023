@@ -16,9 +16,14 @@ public class EnemyAI : MonoBehaviour
     private float attackDelay;
     private float randomAttack;
 
+    private AudioSource audioSource;
+    public AudioClip AOESFX;
+    public AudioClip branchSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         StartCoroutine(SpawnBranch());
     }
@@ -43,6 +48,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
+                    audioSource.PlayOneShot(branchSound);
                     float randomYPosition = Random.Range(-3.3f, 4.2f);
                     Vector2 branchSpawnPos = new Vector2(transform.position.x, randomYPosition);
                     Instantiate(branch, branchSpawnPos, Quaternion.Euler(0, 0, 90));
@@ -58,6 +64,7 @@ public class EnemyAI : MonoBehaviour
 
     public void SpawnRoot()
     {
+        audioSource.PlayOneShot(AOESFX);
         animator.Play("AOE Charge");
         Vector2 playerPos = player.transform.position;
         playerPos.y = -5.2f;

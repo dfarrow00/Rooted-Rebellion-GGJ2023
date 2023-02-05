@@ -15,8 +15,14 @@ public class EnemyHealth : MonoBehaviour
     private Animator animator;
 
     private bool isDead;
+
+    private AudioSource audioSource;
+    public AudioClip damageSound;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         animator = GetComponent<Animator>();
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
@@ -36,6 +42,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (!isDead)
         {
+            audioSource.PlayOneShot(damageSound);
+
             if (type == 1)
             {
                 float rand = Random.Range(0f, 1f);
