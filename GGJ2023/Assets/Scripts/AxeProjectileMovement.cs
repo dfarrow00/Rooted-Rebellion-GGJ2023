@@ -30,7 +30,7 @@ public class AxeProjectileMovement : MonoBehaviour
         //If axe goes out of level bounds, a new axe pickup will spawn in the level.
         if (transform.position.x > 15 || transform.position.x < -15)
         {
-            Instantiate(axePickup, new Vector2(8, 5), Quaternion.identity);
+            Instantiate(axePickup, new Vector2(5, 5), Quaternion.identity);
             Destroy(gameObject);
         }
     }
