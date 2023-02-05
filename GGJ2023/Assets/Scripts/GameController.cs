@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
         {
             gameOver = true;
             winMenu.SetActive(true);
+            Time.timeScale = 0.0f;
         }
         
     }
@@ -26,16 +27,19 @@ public class GameController : MonoBehaviour
         {
             gameOver = true;
             loseMenu.SetActive(true);
+            Time.timeScale = 0.0f;
         }
     }
 
     public void LoadMainMenu()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
     }
 
     public void Retry()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

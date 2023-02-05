@@ -5,7 +5,7 @@ using UnityEngine;
 public class AxePickup : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
-    // Start is called before the first frame update
+    
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -13,20 +13,15 @@ public class AxePickup : MonoBehaviour
         rigidBody.AddTorque(50);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //If player collides, notify AxeCombat script.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            AxeThrowing axeThrowingScript = collision.gameObject.GetComponentInChildren<AxeThrowing>();
-            if (axeThrowingScript)
+            AxeCombat axeCombatScript = collision.gameObject.GetComponentInChildren<AxeCombat>();
+            if (axeCombatScript)
             {
-                axeThrowingScript.PickUpAxe();
+                axeCombatScript.PickUpAxe();
             }
             Destroy(gameObject);
         }

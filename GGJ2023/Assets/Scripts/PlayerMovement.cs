@@ -31,10 +31,10 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         animator = GetComponent<Animator>();
-        axeBone.transform.localScale = new Vector3(0, 0, 0);
+        axeBone.transform.localScale = new Vector3(0, 0, 0);//Hides the axe bone on the character model to allow for a game object to be used instead.
 
+        //Level bounds are calculated to prevent the player from exiting the level.
         playerWidth = GetComponent<BoxCollider2D>().bounds.size.x;
-
         minXBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + (playerWidth / 2);
         maxXBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
     }
@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         movement = Input.GetAxis("Horizontal");
         animator.SetFloat("speed", Mathf.Abs(movement));
 
+        //Jump if on ground, double jump if in air and not used already.
         if (Input.GetButtonDown("Jump"))
         {
             if (grounded)
@@ -72,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
+        //Checks if player is out of map bounds and sets position to inside map if they are.
         if (gameObject.transform.position.x < minXBounds)
         {
             gameObject.transform.position = new Vector2(minXBounds, transform.position.y);
@@ -81,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
             gameObject.transform.position = new Vector2(maxXBounds, transform.position.y);
         }
 
+        //Checks which side mouse cursor is relative to the player and flips the character if needed.
         if (mainCamera.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x)
         {
             flipped = true;
@@ -103,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Ground check
         if (collision.gameObject.tag == "Ground")
         {
             grounded = true;
@@ -112,12 +116,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        //Ground check
         if (collision.gameObject.tag == "Ground")
         {
             grounded = false;
         }
     }
 
+    //When dashing, gravity is removed, dash velocity is applied, then after a delay, gravity is returned to normal.
     private IEnumerator Dash()
     {
         canDash = false;
