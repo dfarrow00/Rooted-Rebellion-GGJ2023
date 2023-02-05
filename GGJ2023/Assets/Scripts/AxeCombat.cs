@@ -16,9 +16,14 @@ public class AxeCombat : MonoBehaviour
     private Camera mainCamera;
     private Vector3 mousePos;
     private Animator animator;
-    
+
+    private AudioSource audioSource;
+    public AudioClip attackSound;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         hasAxe = true;
         canMelee = true;
@@ -40,6 +45,8 @@ public class AxeCombat : MonoBehaviour
         {
             if (axePrefab)
             {
+                audioSource.PlayOneShot(attackSound);
+
                 Instantiate(axePrefab, axeSpawnTransform.position, Quaternion.identity);
                 hasAxe = false;
                 heldAxe.SetActive(false);
@@ -50,6 +57,8 @@ public class AxeCombat : MonoBehaviour
         //When melee pressed, LineCast is used to detect if enemy is in range. Applies damage if is.
         if (Input.GetButtonDown("Fire1") && hasAxe && canMelee)
         {
+            audioSource.PlayOneShot(attackSound);
+
             canMelee = false;
             Invoke(nameof(MeleeDelay), meleeDelay);
             animator.SetTrigger("throw");

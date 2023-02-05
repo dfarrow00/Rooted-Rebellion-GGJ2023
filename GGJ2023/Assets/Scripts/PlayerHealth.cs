@@ -10,9 +10,14 @@ public class PlayerHealth : MonoBehaviour
 
     private float health;
     private GameController gameController;
+
+    private AudioSource audioSource;
+    public AudioClip damageSound;
     
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         health = maxHealth;
     }

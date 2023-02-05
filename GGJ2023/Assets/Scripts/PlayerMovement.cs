@@ -25,9 +25,14 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBody;
 
+    private AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         animator = GetComponent<Animator>();
@@ -57,9 +62,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 grounded = false;
+                audioSource.PlayOneShot(jumpSound);
             }
             else if (!grounded && !doubleJumped)
             {
+                audioSource.PlayOneShot(jumpSound);
                 rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 doubleJumped = true;
                 StartCoroutine(EmitTrail(0.1f));
@@ -126,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
     //When dashing, gravity is removed, dash velocity is applied, then after a delay, gravity is returned to normal.
     private IEnumerator Dash()
     {
+        audioSource.PlayOneShot(dashSound);
+
         canDash = false;
         isDashing = true;
         float normalGravity = rigidBody.gravityScale;
