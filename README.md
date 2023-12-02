@@ -10,6 +10,7 @@
   <li><a href="#screenshots">Screenshots</a></li>
   <li><a href="#controls">Controls</a></li>
   <li><a href="#video">Demo Video</a></li>
+  <li><a href="#game_download">Game Download</a></li>
 </ol>
 
 <h2 id="project_overview">☁️ Project Overview</h2>
@@ -41,3 +42,13 @@ Rooted Rebllion is a 2D boss battle style game that was developed in 48 hours fo
 <h2 id="video"> 🎥 Demo Video </h2>
 
 A demo video of the project can be viewed on youtube [here](https://youtu.be/bjpfNYzy3jY)!
+
+<h2 id="game_download"> 💾 Game Download </h2>
+
+You can download and play the game from the [Rooted Rebellion Global Game Jam 2023 game page](https://v3.globalgamejam.org/2023/games/rooted-rebellion-6)
+
+### Installation Instructions:
+<ol>
+  <li>Extract the 'RootedRebellion_v1.0' zip folder</li>
+  <li>Run 'Rooted Rebellion.exe' to play</li>
+</ol>
