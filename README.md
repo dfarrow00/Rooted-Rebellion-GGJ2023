@@ -1,8 +1,8 @@
-<h1 align="center">Rooted Rebellion</h1>
+<!--<h1 align="center">Rooted Rebellion</h1>-->
 
-<h3 align="center">Global Game Jam 2023 Submission</h3>
+![RootedRebellionBanner](https://github.com/dfarrow00/Rooted-Rebellion-GGJ2023/assets/111578789/1eddcbc0-726b-42dd-ba6f-dad8c33d0f06)
 
-<!--Animated Gif goes here-->
+<h1 align="center">Global Game Jam 2023 Submission</h1>
 
 <h2>:book: Table of Contents</h2>
 <ol>
